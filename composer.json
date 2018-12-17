@@ -1,0 +1,21 @@
+{
+  "name": "no_framework",
+  "description": "Create a PHP application without a framework",
+  "keywords": ["Your keyword", "Another keyword"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Your Name",
+      "email": "your@email.com",
+      "role": "Creator / Main Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Example\\": "src/"
+    }
+  }
+}
