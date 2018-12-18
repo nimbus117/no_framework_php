@@ -27,19 +27,18 @@ $whoops->register();
 $request = new \Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
 $response = new \Http\HttpResponse;
 
-$dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-    $r->addRoute('GET', '/hello-world', function () {
-        echo 'Hello World';
-    });
-    $r->addRoute('GET', '/another-route', function () {
-        echo 'This works too';
-    });
-});
-
-
 /**
  * router - dispatches to different handlers
  */
+$routeDefinitionCallback = function (\FastRoute\RouteCollector $r) {
+  $routes = include('Routes.php');
+  foreach ($routes as $route) {
+    $r->addRoute($route[0], $route[1], $route[2]);
+  }
+};
+
+$dispatcher = \FastRoute\simpleDispatcher($routeDefinitionCallback);
+
 $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPath());
 switch ($routeInfo[0]) {
 case \FastRoute\Dispatcher::NOT_FOUND:
@@ -61,7 +60,6 @@ case \FastRoute\Dispatcher::FOUND:
 // $response->setContent($content);
 // $response->setContent('404 - Page not found');
 // $response->setStatusCode(404);
-
 
 /**
  * send the response data to the browser
