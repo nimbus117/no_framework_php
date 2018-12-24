@@ -22,6 +22,7 @@ $injector->delegate('Twig_Environment', function () use ($injector) {
 });
 
 $injector->alias('Example\Template\Renderer', 'Example\Template\TwigRenderer');
+$injector->alias('Example\Template\FrontendRenderer', 'Example\Template\FrontendTwigRenderer');
 
 $injector->define('Example\Page\FilePageReader', [
   ':pageFolder' => __DIR__ . '/../pages',
@@ -29,5 +30,8 @@ $injector->define('Example\Page\FilePageReader', [
 
 $injector->alias('Example\Page\PageReader', 'Example\Page\FilePageReader');
 $injector->share('Example\Page\FilePageReader');
+
+$injector->alias('Example\Menu\MenuReader', 'Example\Menu\ArrayMenuReader');
+$injector->share('Example\Menu\ArrayMenuReader');
 
 return $injector;
